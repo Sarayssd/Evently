@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evently</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a0a0f;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        .ev-header {
+            position: relative;
+            overflow: hidden;
+            padding: 60px 40px 80px;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+
+        .ev-header::before {
+            content: '';
+            position: absolute;
+            top: -80px; left: -80px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .ev-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: -40px;
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(236,72,153,0.35) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .ev-logo {
+            position: relative; z-index: 1;
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 13px; color: rgba(255,255,255,0.7);
+            margin-bottom: 24px;
+        }
+
+        .ev-logo span {
+            width: 8px; height: 8px;
+            background: #a78bfa; border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #a78bfa;
+        }
+
+        .ev-title {
+        position: relative; z-index: 1;
+        font-size: 52px; font-weight: 800;
+        background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #f9a8d4 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0 0 12px;
+        letter-spacing: -1px;
+}
+
+        .ev-subtitle {
+            position: relative; z-index: 1;
+            color: rgba(255,255,255,0.55);
+            font-size: 16px; margin: 0 0 32px;
+        }
+
+        .ev-stats {
+            display: flex; justify-content: center; gap: 32px;
+            margin-top: 40px;
+            position: relative; z-index: 1;
+        }
+
+        .ev-stat { text-align: center; }
+        .ev-stat-num { font-size: 24px; font-weight: 700; color: #fff; }
+        .ev-stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+        /* CONTAINER */
+        .ev-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .ev-section-title {
+            font-size: 13px; font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .ev-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD */
+        .ev-card {
+            background: #13131f;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .ev-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+        }
+
+        .ev-card-banner { height: 8px; }
+        .ev-card-banner.purple { background: linear-gradient(90deg, #7c3aed, #ec4899); }
+        .ev-card-banner.teal   { background: linear-gradient(90deg, #0891b2, #10b981); }
+        .ev-card-banner.amber  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+        .ev-card-banner.green  { background: linear-gradient(90deg, #10b981, #06b6d4); }
+        .ev-card-banner.pink   { background: linear-gradient(90deg, #ec4899, #f43f5e); }
+
+        .ev-card-body { padding: 24px; }
+
+        .ev-card-top {
+            display: flex; align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .ev-category {
+            font-size: 11px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 4px 10px; border-radius: 50px;
+        }
+
+        .ev-category.purple { background: rgba(139,92,246,0.15); color: #a78bfa; }
+        .ev-category.teal   { background: rgba(20,184,166,0.15);  color: #2dd4bf; }
+        .ev-category.amber  { background: rgba(245,158,11,0.15);  color: #fbbf24; }
+        .ev-category.green  { background: rgba(16,185,129,0.15);  color: #34d399; }
+        .ev-category.pink   { background: rgba(236,72,153,0.15);  color: #f472b6; }
+
+        .ev-cupos {
+            font-size: 12px; color: rgba(255,255,255,0.4);
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .ev-cupos-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%; background: #10b981;
+        }
+
+        .ev-cupos-dot.low  { background: #f59e0b; }
+        .ev-cupos-dot.full { background: #ef4444; }
+
+        .ev-card-title {
+            font-size: 19px; font-weight: 700;
+            color: #fff; margin: 0 0 8px; line-height: 1.3;
+        }
+
+        .ev-card-desc {
+            font-size: 14px; color: rgba(255,255,255,0.45);
+            line-height: 1.6; margin: 0 0 20px;
+        }
+
+        .ev-card-meta { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+
+        .ev-meta-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 13px; color: rgba(255,255,255,0.5);
+        }
+
+        .ev-meta-icon {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px;
+        }
+
+        /* PROGRESS */
+        .ev-progress-wrap { margin-bottom: 20px; }
+
+        .ev-progress-label {
+            display: flex; justify-content: space-between;
+            font-size: 12px; color: rgba(255,255,255,0.4);
+            margin-bottom: 6px;
+        }
+
+        .ev-progress-bar {
+            height: 4px; background: rgba(255,255,255,0.08);
+            border-radius: 10px; overflow: hidden;
+        }
+
+        .ev-progress-fill {
+            height: 100%; border-radius: 10px;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            transition: width 0.4s ease;
+        }
+
+        .ev-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+            margin-bottom: 20px;
+        }
+
+        /* FORM */
+        .ev-form-group { margin-bottom: 14px; }
+
+        .ev-form-group label {
+            display: block; font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 6px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .ev-form-group input {
+            width: 100%; padding: 10px 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px; color: #fff;
+            font-size: 14px; font-family: inherit;
+            outline: none; transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .ev-form-group input:focus {
+            border-color: rgba(139,92,246,0.5);
+            background: rgba(139,92,246,0.05);
+        }
+
+        .ev-form-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+        .ev-btn {
+            width: 100%; padding: 13px; border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: #fff; font-size: 15px; font-weight: 700;
+            cursor: pointer; font-family: inherit;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .ev-btn:hover { opacity: 0.9; transform: scale(0.99); }
+
+        .ev-btn:disabled {
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.25);
+            cursor: not-allowed; transform: none;
+        }
+
+        .ev-msg {
+            margin-top: 10px; font-size: 13px;
+            text-align: center; min-height: 18px;
+        }
+
+        .ev-msg.success { color: #34d399; }
+        .ev-msg.error   { color: #f87171; }
+
+        .ev-full-tag {
+            text-align: center; font-size: 13px;
+            color: #f87171; font-weight: 600;
+            margin-top: 10px; display: none;
+        }
+
+        .ev-empty {
+            text-align: center; margin-top: 80px;
+            color: rgba(255,255,255,0.3); font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="ev-header">
+    <div class="ev-logo"><span></span> Plataforma universitaria</div>
+    <h1 class="ev-title">Evently</h1>
+    <p class="ev-subtitle">Descubre, inscríbete y vive los mejores eventos de tu campus</p>
+    <div class="ev-stats">
+        <div class="ev-stat">
+            <div class="ev-stat-num">{{ events|length }}</div>
+            <div class="ev-stat-label">Eventos activos</div>
+        </div>
+        <div class="ev-stat">
+            <div class="ev-stat-num">{{ registration_counts.values()|sum }}</div>
+            <div class="ev-stat-label">Inscritos</div>
+        </div>
+    </div>
+</header>
+
+<div class="ev-container">
+
+    {% if events %}
+
+    <p class="ev-section-title">Próximos eventos</p>
+
+    <div class="ev-grid">
+
+        {% for event in events %}
+
+        {% set registered = registration_counts.get(event.id, 0) %}
+        {% set available = event.capacity - registered %}
+        {% set pct = (registered / event.capacity * 100) | int if event.capacity > 0 else 0 %}
+        {% set colors = ['purple','teal','amber','green','pink'] %}
+        {% set color = colors[loop.index0 % 5] %}
+
+        <div class="ev-card"
+             data-event-id="{{ event.id }}"
+             data-event-capacity="{{ event.capacity }}"
+             data-event-registered="{{ registered }}"
+             data-event-date="{{ event.event_date or '' }}"
+             data-event-time="{{ event.event_time or '' }}">
+
+            <div class="ev-card-banner {{ color }}"></div>
+
+            <div class="ev-card-body">
+
+                <div class="ev-card-top">
+                    <span class="ev-category {{ color }}">{{ event.category }}</span>
+                    <span class="ev-cupos">
+                        <span class="ev-cupos-dot {% if available <= 5 %}low{% endif %} {% if available <= 0 %}full{% endif %}"></span>
+                        <span class="available-count">{{ available }}</span> cupos
+                    </span>
+                </div>
+
+                <h2 class="ev-card-title">{{ event.title }}</h2>
+                <p class="ev-card-desc">{{ event.description }}</p>
+
+                <div class="ev-card-meta">
+                    <div class="ev-meta-item">
+                        <div class="ev-meta-icon">📅</div>
+                        <span class="event-date-display">{% if event.event_date %}{{ event.event_date }}{% else %}No definida{% endif %}</span>
+                    </div>
+                    <div class="ev-meta-item">
+                        <div class="ev-meta-icon">🕐</div>
+                        <span class="event-time-display">{% if event.event_time %}{{ event.event_time }}{% else %}No definida{% endif %}</span>
+                    </div>
+                    <div class="ev-meta-item">
+                        <div class="ev-meta-icon">📍</div>
+                        <span>{{ event.location }}</span>
+                    </div>
+                </div>
+
+                <div class="ev-progress-wrap">
+                    <div class="ev-progress-label">
+                        <span>Inscritos</span>
+                        <span><span class="registered-count">{{ registered }}</span> / {{ event.capacity }}</span>
+                    </div>
+                    <div class="ev-progress-bar">
+                        <div class="ev-progress-fill" style="width: {{ pct }}%;"></div>
+                    </div>
+                </div>
+
+                <div class="ev-divider"></div>
+
+                <form class="registration-form">
+                    <div class="ev-form-group">
+                        <label>Nombre</label>
+                        <input type="text" name="first_name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="ev-form-group">
+                        <label>Apellido</label>
+                        <input type="text" name="last_name" placeholder="Tu apellido" required>
+                    </div>
+                    <div class="ev-form-group">
+                        <label>Documento</label>
+                        <input type="text" name="document_id" placeholder="Número de documento" required>
+                    </div>
+                    <div class="ev-form-group">
+                        <label>Correo</label>
+                        <input type="email" name="email" placeholder="tu@correo.edu" required>
+                    </div>
+                    <button type="submit" class="ev-btn">Inscribirme al evento</button>
+                    <p class="ev-full-tag">Evento lleno</p>
+                </form>
+
+                <div class="ev-msg" aria-live="polite"></div>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+    <p class="ev-empty">No hay eventos registrados aún.</p>
+    {% endif %}
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".ev-card[data-event-id]");
+
+    const formatEventDate = (dateValue) => {
+        if (!dateValue) return "No definida";
+        const parsed = new Date(dateValue + "T00:00:00");
+        if (Number.isNaN(parsed.getTime())) return "No definida";
+        const day = parsed.getDate();
+        const monthName = parsed.toLocaleString("es-ES", { month: "long" });
+        const year = parsed.getFullYear();
+        return `${day} de ${monthName} de ${year}`;
+    };
+
+    const formatEventTime = (timeValue) => {
+        if (!timeValue) return "No definida";
+        const match = String(timeValue).match(/^(\d{1,2}):(\d{2})/);
+        if (!match) return "No definida";
+
+        let hour = Number(match[1]);
+        const minutes = match[2];
+        const period = hour >= 12 ? "PM" : "AM";
+
+        hour = hour % 12;
+        if (hour === 0) hour = 12;
+
+        return `${hour}:${minutes} ${period}`;
+    };
+
+    cards.forEach((card) => {
+        const eventId = card.dataset.eventId;
+        const capacity = Number(card.dataset.eventCapacity);
+
+        const eventDateNode = card.querySelector(".event-date-display");
+        const eventTimeNode = card.querySelector(".event-time-display");
+
+        if (eventDateNode) eventDateNode.textContent = formatEventDate(card.dataset.eventDate);
+        if (eventTimeNode) eventTimeNode.textContent = formatEventTime(card.dataset.eventTime);
+
+        const registeredCountNode = card.querySelector(".registered-count");
+        const availableCountNode = card.querySelector(".available-count");
+        const form = card.querySelector(".registration-form");
+        const messageNode = card.querySelector(".ev-msg");
+        const button = card.querySelector(".ev-btn");
+        const fullLabel = card.querySelector(".ev-full-tag");
+        const progressFill = card.querySelector(".ev-progress-fill");
+
+        let currentRegistered = Number(registeredCountNode.textContent);
+
+        if (capacity - currentRegistered <= 0) {
+            button.disabled = true;
+            fullLabel.style.display = "block";
+        }
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            messageNode.textContent = "";
+            messageNode.className = "ev-msg";
+
+            const payload = {
+                first_name: form.querySelector("input[name='first_name']").value.trim(),
+                last_name: form.querySelector("input[name='last_name']").value.trim(),
+                document_id: form.querySelector("input[name='document_id']").value.trim(),
+                email: form.querySelector("input[name='email']").value.trim()
+            };
+
+            try {
+                const response = await fetch(`/events/${eventId}/register`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    messageNode.textContent = data.detail || "Error en la inscripción";
+                    messageNode.classList.add("error");
+                    return;
+                }
+
+                messageNode.textContent = "¡Inscripción exitosa!";
+                messageNode.classList.add("success");
+
+                currentRegistered += 1;
+                const updatedAvailable = capacity - currentRegistered;
+
+                registeredCountNode.textContent = currentRegistered;
+                availableCountNode.textContent = updatedAvailable;
+
+                if (progressFill) {
+                    progressFill.style.width = Math.round((currentRegistered / capacity) * 100) + "%";
+                }
+
+                form.reset();
+
+                if (updatedAvailable <= 0) {
+                    button.disabled = true;
+                    fullLabel.style.display = "block";
+                }
+
+            } catch (error) {
+                messageNode.textContent = "No se pudo completar la inscripción";
+                messageNode.classList.add("error");
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
